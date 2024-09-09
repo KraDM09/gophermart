@@ -8,7 +8,7 @@ import (
 )
 
 type UserBalance struct {
-	Balance   float64 `json:"balance"`
+	Current   float64 `json:"current"`
 	Withdrawn int     `json:"withdrawn"`
 }
 
@@ -26,7 +26,7 @@ func (h *BalanceHandler) GetHandler(
 	}
 
 	balance := UserBalance{
-		Balance:   user.Balance,
+		Current:   user.Balance,
 		Withdrawn: user.Withdrawn,
 	}
 
