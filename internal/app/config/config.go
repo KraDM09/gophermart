@@ -7,7 +7,7 @@ import (
 
 var (
 	FlagRunAddr           string
-	FlagLogLevel          string
+	FlagLogLevel          = "info"
 	FlagDatabaseDsn       string
 	FlagAccrualSystemAddr string
 
@@ -16,8 +16,7 @@ var (
 )
 
 func ParseFlags() {
-	flag.StringVar(&FlagRunAddr, "a", ":8080", "address and port to run server")
-	flag.StringVar(&FlagLogLevel, "l", "info", "log level")
+	flag.StringVar(&FlagRunAddr, "a", "", "address and port to run server")
 	flag.StringVar(&FlagDatabaseDsn, "d", "", "database dsn")
 	flag.StringVar(&FlagAccrualSystemAddr, "r", ":8080", "accrual system address")
 
@@ -26,11 +25,6 @@ func ParseFlags() {
 	if serverAddress := os.Getenv("RUN_ADDRESS"); serverAddress != "" {
 		FlagRunAddr = serverAddress
 	}
-
-	if envLogLevel := os.Getenv("LOG_LEVEL"); envLogLevel != "" {
-		FlagLogLevel = envLogLevel
-	}
-
 	if envPasswordSalt := os.Getenv("PASSWORD_SALT"); envPasswordSalt != "" {
 		PasswordSalt = envPasswordSalt
 	}

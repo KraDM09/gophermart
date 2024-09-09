@@ -5,8 +5,6 @@ import (
 	"github.com/KraDM09/gophermart/internal/app/validator"
 	"net/http"
 
-	"github.com/KraDM09/gophermart/internal/constants"
-
 	"github.com/KraDM09/gophermart/internal/app/access"
 	"github.com/KraDM09/gophermart/internal/app/compressor"
 
@@ -31,13 +29,8 @@ func Run(
 
 	validator.Initialize()
 
-	// создаём экземпляр приложения, передавая внешние зависимости
 	instance := newApp(ctx, store, validator, r, logger, compressor, access)
 
 	instance.logger.Info("Running server", "address", config.FlagRunAddr)
 	return http.ListenAndServe(config.FlagRunAddr, instance.webhook(ctx))
-}
-
-func GetUserID(r *http.Request) string {
-	return r.Context().Value(constants.ContextUserIDKey).(string)
 }
