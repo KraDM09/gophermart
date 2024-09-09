@@ -30,10 +30,11 @@ func (pg PG) CreateUser(
 	var user User
 	err := pg.pool.QueryRow(ctx,
 		`INSERT INTO db_gophermart.users (login, password)
-			VALUES ($1, $2) ON CONFLICT (login) DO NOTHING RETURNING login, password`,
+			VALUES ($1, $2) ON CONFLICT (login) DO NOTHING RETURNING id, login, password`,
 		login,
 		password,
 	).Scan(
+		&user.ID,
 		&user.Login,
 		&user.Password,
 	)
