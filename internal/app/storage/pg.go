@@ -112,16 +112,7 @@ func (pg PG) Bootstrap(
             balance     DECIMAL(10, 1) DEFAULT 0
 		);
 
-	    CREATE TABLE IF NOT EXISTS db_gophermart.withdrawals
-		(
-			id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-			order_id     INT REFERENCES db_gophermart.orders (id) NOT NULL,
-			user_id      INT REFERENCES db_gophermart.users (id)  NOT NULL,
-			sum          INTEGER                                  NOT NULL,
-			processed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-		);
-       
-        CREATE TYPE db_gophermart.order_statuses AS ENUM (
+		CREATE TYPE db_gophermart.order_statuses AS ENUM (
 			'NEW',
 			'PROCESSING',
 			'INVALID',
@@ -135,6 +126,15 @@ func (pg PG) Bootstrap(
 			uploaded_at TIMESTAMP WITH TIME ZONE     DEFAULT NOW(),
 			status      db_gophermart.order_statuses DEFAULT 'NEW'::db_gophermart.order_statuses,
 			accrual     NUMERIC(10, 1)               DEFAULT NULL
+		);
+
+	    CREATE TABLE IF NOT EXISTS db_gophermart.withdrawals
+		(
+			id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+			order_id     INT REFERENCES db_gophermart.orders (id) NOT NULL,
+			user_id      INT REFERENCES db_gophermart.users (id)  NOT NULL,
+			sum          INTEGER                                  NOT NULL,
+			processed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 		);
     `)
 
