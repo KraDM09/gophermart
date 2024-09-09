@@ -68,6 +68,10 @@ func (a *app) webhook(
 
 	a.router.Group(func(r chi.Router) {
 		r.Use(a.access.Control)
+		r.Get("/api/orders/{number}", func(rw http.ResponseWriter, r *http.Request) {
+			userHandler.GetOrderHandler(ctx, rw, r, chi.URLParam(r, "number"))
+		})
+
 		r.Get("/api/user/orders", func(rw http.ResponseWriter, r *http.Request) {
 			ordersHandler.GetHandler(ctx, rw, r)
 		})

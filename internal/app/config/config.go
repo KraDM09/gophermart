@@ -18,7 +18,7 @@ var (
 func ParseFlags() {
 	flag.StringVar(&FlagRunAddr, "a", "", "address and port to run server")
 	flag.StringVar(&FlagDatabaseDsn, "d", "", "database dsn")
-	flag.StringVar(&FlagAccrualSystemAddr, "r", ":8080", "accrual system address")
+	flag.StringVar(&FlagAccrualSystemAddr, "r", "", "accrual system address")
 
 	flag.Parse()
 
