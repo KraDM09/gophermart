@@ -9,7 +9,7 @@ import (
 )
 
 type OrderPostRequest struct {
-	OrderID string `json:"order_id" validate:"required,min=10,max=16"`
+	OrderID string `json:"order_id" validate:"required,min=6,max=16"`
 }
 
 func (h *OrderHandler) PostHandler(
