@@ -191,6 +191,7 @@ func (pg PG) GetOrderByNumber(
 		&order.Number,
 		&order.UploadedAt,
 		&order.Status,
+		&order.Accrual,
 	)
 
 	if err == pgx.ErrNoRows {
