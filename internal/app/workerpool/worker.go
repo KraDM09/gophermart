@@ -3,6 +3,8 @@ package workerpool
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/KraDM09/gophermart/internal/app/config"
 	"github.com/KraDM09/gophermart/internal/app/models"
 	"github.com/KraDM09/gophermart/internal/app/storage"
 	"github.com/KraDM09/gophermart/internal/constants"
@@ -97,8 +99,7 @@ func GetOrderHandler(
 	ctx context.Context,
 	number string,
 ) (*GetOrderResponse, error) {
-	//url := fmt.Sprintf("%s/api/orders/%s", config.FlagAccrualSystemAddr, number)
-	url := "https://7b525102-c05c-4a37-9073-76cc1430afd1.mock.pstmn.io"
+	url := fmt.Sprintf("%s/api/orders/%s", config.FlagAccrualSystemAddr, number)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 
 	if err != nil {
