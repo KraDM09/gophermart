@@ -5,16 +5,32 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/KraDM09/gophermart/internal/app/config"
+<<<<<<< Updated upstream
+=======
+	"github.com/KraDM09/gophermart/internal/app/logger"
+>>>>>>> Stashed changes
 	"github.com/KraDM09/gophermart/internal/app/models"
 	"github.com/KraDM09/gophermart/internal/app/storage"
 	"github.com/KraDM09/gophermart/internal/constants"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
 type WorkerPool struct {
-	Store storage.Storage
+	store  storage.Storage
+	logger logger.Logger
+}
+
+func NewHandler(
+	store storage.Storage,
+	logger logger.Logger,
+) *WorkerPool {
+	return &WorkerPool{
+		store:  store,
+		logger: logger,
+	}
 }
 
 func (wp WorkerPool) Worker(
@@ -23,9 +39,12 @@ func (wp WorkerPool) Worker(
 	jobs chan models.WorkerPoolJob,
 ) {
 	for job := range jobs {
+		wp.logger.Info("рабочий id запущен", "id", strconv.Itoa(id))
+
 		response, err := GetOrderHandler(context.Background(), job.Number)
 
 		if err != nil {
+			wp.logger.Error(err.Error())
 			time.Sleep(1 * time.Second)
 			jobs <- job
 
@@ -33,6 +52,7 @@ func (wp WorkerPool) Worker(
 		}
 
 		if response.StatusCode == 429 {
+			wp.logger.Error("превышено количество запросов к сервису")
 			time.Sleep(60 * time.Second)
 			jobs <- job
 
@@ -40,6 +60,7 @@ func (wp WorkerPool) Worker(
 		}
 
 		if response.StatusCode != 200 {
+			wp.logger.Error("некорректный ответ от API")
 			time.Sleep(1 * time.Second)
 			jobs <- job
 
@@ -47,15 +68,17 @@ func (wp WorkerPool) Worker(
 		}
 
 		if response.Status == constants.LOYALTY_ORDER_STATUS_REGISTERED {
+			wp.logger.Error("заказ  to не обработан")
 			time.Sleep(1 * time.Second)
 			jobs <- job
 
 			continue
 		}
 
-		tx, err := wp.Store.Begin(ctx)
+		tx, err := wp.store.Begin(ctx)
 
 		if err != nil {
+			wp.logger.Error("ошибка начала транзакции")
 			time.Sleep(1 * time.Second)
 			jobs <- job
 
@@ -65,9 +88,10 @@ func (wp WorkerPool) Worker(
 		defer tx.Rollback(ctx)
 
 		if response.Accrual != nil {
-			err = wp.Store.UpdateBalance(ctx, tx, *response.Accrual, job.UserID)
+			err = wp.store.UpdateBalance(ctx, tx, *response.Accrual, job.UserID)
 
 			if err != nil {
+				wp.logger.Error("ошибка обновления баланса")
 				time.Sleep(1 * time.Second)
 				jobs <- job
 
@@ -75,9 +99,10 @@ func (wp WorkerPool) Worker(
 			}
 		}
 
-		err = wp.Store.UpdateOrder(ctx, tx, response.Status, job.Number, response.Accrual)
+		err = wp.store.UpdateOrder(ctx, tx, response.Status, job.Number, response.Accrual)
 
 		if err != nil {
+			wp.logger.Error("ошибка обновления заказа")
 			time.Sleep(1 * time.Second)
 			jobs <- job
 

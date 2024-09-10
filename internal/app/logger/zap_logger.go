@@ -79,8 +79,8 @@ func (logger ZapLogger) Info(msg string, key string, value string) {
 	Log.Info(msg, zap.String(key, value))
 }
 
-func (logger ZapLogger) Error(msg string, key string, value string) {
-	Log.Error(msg, zap.String(key, value))
+func (logger ZapLogger) Error(msg string) {
+	Log.Error(msg)
 }
 
 // WithLogging добавляет дополнительный код для регистрации сведений о запросе

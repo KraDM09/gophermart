@@ -102,9 +102,7 @@ func (a *app) startWorkers(
 	ctx context.Context,
 	quantity int,
 ) {
-	wp := workerpool.WorkerPool{
-		Store: a.store,
-	}
+	wp := workerpool.NewHandler(a.store, a.logger)
 
 	for w := 1; quantity <= 3; w++ {
 		go wp.Worker(ctx, w, a.jobsChan)
