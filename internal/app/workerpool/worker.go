@@ -5,10 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/KraDM09/gophermart/internal/app/config"
-<<<<<<< Updated upstream
-=======
 	"github.com/KraDM09/gophermart/internal/app/logger"
->>>>>>> Stashed changes
 	"github.com/KraDM09/gophermart/internal/app/models"
 	"github.com/KraDM09/gophermart/internal/app/storage"
 	"github.com/KraDM09/gophermart/internal/constants"
