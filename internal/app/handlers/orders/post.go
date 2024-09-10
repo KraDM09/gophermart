@@ -2,6 +2,7 @@ package orders
 
 import (
 	"context"
+	"github.com/KraDM09/gophermart/internal/app/models"
 	"github.com/KraDM09/gophermart/internal/app/util"
 	"github.com/KraDM09/gophermart/internal/constants"
 	"io"
@@ -58,6 +59,11 @@ func (h *OrderHandler) PostHandler(
 	}
 
 	err = h.store.CreateOrder(ctx, userID, number)
+
+	h.jobChan <- models.WorkerPoolJob{
+		Number: number,
+		UserID: userID,
+	}
 
 	if err != nil {
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)

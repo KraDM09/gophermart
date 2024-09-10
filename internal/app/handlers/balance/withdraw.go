@@ -80,7 +80,7 @@ func (h *BalanceHandler) WithdrawHandler(
 		return
 	}
 
-	err = h.store.UpdateBalance(ctx, tx, req.Sum, userID)
+	err = h.store.UpdateBalance(ctx, tx, -float32(req.Sum), userID)
 
 	if err != nil {
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
