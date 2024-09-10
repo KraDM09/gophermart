@@ -37,7 +37,7 @@ func ParseFlags() {
 		FlagDatabaseDsn = envDatabaseDsn
 	}
 
-	if envAccrualSystemAddr := os.Getenv("ACCRUAL_SYSTEM_ADDR"); envAccrualSystemAddr != "" {
+	if envAccrualSystemAddr := os.Getenv("ACCRUAL_SYSTEM_ADDRESS"); envAccrualSystemAddr != "" {
 		FlagAccrualSystemAddr = envAccrualSystemAddr
 	}
 }
