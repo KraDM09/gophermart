@@ -9,10 +9,10 @@ import (
 )
 
 type Order struct {
-	Number     string `json:"number"`
-	Status     string `json:"status"`
-	UploadedAt string `json:"uploaded_at"`
-	Accrual    *int   `json:"accrual"`
+	Number     string   `json:"number"`
+	Status     string   `json:"status"`
+	UploadedAt string   `json:"uploaded_at"`
+	Accrual    *float32 `json:"accrual"`
 }
 
 func (h *OrderHandler) GetHandler(
@@ -44,7 +44,7 @@ func (h *OrderHandler) GetHandler(
 		}
 
 		if order.Accrual != nil {
-			accrual := int(*order.Accrual)
+			accrual := *order.Accrual
 			o.Accrual = &accrual
 		}
 

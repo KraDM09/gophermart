@@ -64,7 +64,7 @@ func (h *BalanceHandler) WithdrawHandler(
 		return
 	}
 
-	if user.Balance-float64(req.Sum) < 0 {
+	if user.Balance-float32(req.Sum) < 0 {
 		http.Error(rw, "На счету недостаточно средств", http.StatusPaymentRequired)
 		return
 	}

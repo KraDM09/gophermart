@@ -8,5 +8,5 @@ type Order struct {
 	Number     string    `json:"number"`
 	UploadedAt time.Time `json:"uploaded_at"`
 	Status     string    `json:"status"`
-	Accrual    *float64  `json:"accrual"`
+	Accrual    *float32  `json:"accrual"`
 }
