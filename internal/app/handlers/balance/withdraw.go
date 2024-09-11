@@ -9,8 +9,8 @@ import (
 )
 
 type WithdrawRequest struct {
-	Order string `json:"order" validate:"required,min=10,max=16"`
-	Sum   int    `json:"sum" validate:"required,min=1"`
+	Order string  `json:"order" validate:"required,min=10,max=16"`
+	Sum   float32 `json:"sum" validate:"required,min=1"`
 }
 
 func (h *BalanceHandler) WithdrawHandler(

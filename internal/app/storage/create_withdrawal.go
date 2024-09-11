@@ -9,7 +9,7 @@ func (pg PG) CreateWithdrawal(
 	ctx context.Context,
 	tx pgx.Tx,
 	userID int,
-	sum int,
+	sum float32,
 	orderID int,
 ) error {
 	row, err := tx.Exec(ctx,
