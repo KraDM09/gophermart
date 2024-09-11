@@ -52,7 +52,7 @@ func (h *BalanceHandler) WithdrawHandler(
 		return
 	}
 
-	if order == nil || order.UserID != userID || order.Status != "NEW" {
+	if order == nil || order.UserID != userID {
 		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
 		return
 	}
