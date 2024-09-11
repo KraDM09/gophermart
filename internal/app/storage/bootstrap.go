@@ -46,7 +46,7 @@ func (pg PG) Bootstrap(
 			create_dttm TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
 			login       TEXT UNIQUE,
 			password    TEXT,
-            balance     DECIMAL(10, 1) DEFAULT 0
+            balance     DECIMAL(10, 2) DEFAULT 0
 		);
 
 		CREATE TYPE db_gophermart.order_statuses AS ENUM (
@@ -62,7 +62,7 @@ func (pg PG) Bootstrap(
 			number      TEXT                                    NOT NULL UNIQUE,
 			uploaded_at TIMESTAMP WITH TIME ZONE     DEFAULT NOW(),
 			status      db_gophermart.order_statuses DEFAULT 'NEW'::db_gophermart.order_statuses,
-			accrual     NUMERIC(10, 1)               DEFAULT NULL
+			accrual     NUMERIC(10, 2)               DEFAULT NULL
 		);
 
 	    CREATE TABLE IF NOT EXISTS db_gophermart.withdrawals
