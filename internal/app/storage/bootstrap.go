@@ -68,7 +68,7 @@ func (pg PG) Bootstrap(
 	    CREATE TABLE IF NOT EXISTS db_gophermart.withdrawals
 		(
 			id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-			order        TEXT                                     NOT NULL UNIQUE,
+			"order"      TEXT                                     NOT NULL UNIQUE,
 			user_id      INT REFERENCES db_gophermart.users (id)  NOT NULL,
 			sum          INTEGER                                  NOT NULL,
 			processed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
