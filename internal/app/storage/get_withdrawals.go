@@ -10,7 +10,7 @@ func (pg PG) GetWithdrawals(
 	userID int,
 ) (*[]models.Withdrawal, error) {
 	rows, err := pg.pool.Query(ctx,
-		`SELECT order, sum, processed_at
+		`SELECT "order", sum, processed_at
 				FROM db_gophermart.withdrawals
 				WHERE user_id = $1;`,
 		userID,
