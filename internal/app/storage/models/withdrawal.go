@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Withdrawal struct {
-	Number       string    `json:"number"`
+	Order        string    `json:"order"`
 	Sum          int       `json:"sum"`
 	Processed_at time.Time `json:"processed_at"`
 }

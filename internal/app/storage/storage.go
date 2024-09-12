@@ -62,7 +62,7 @@ type Storage interface {
 		tx pgx.Tx,
 		userID int,
 		sum float32,
-		orderID int,
+		order string,
 	) error
 
 	GetWithdrawals(

@@ -45,19 +45,6 @@ func (h *BalanceHandler) WithdrawHandler(
 		return
 	}
 
-	order, err := h.store.GetOrderByNumber(ctx, req.Order)
-
-	if err != nil {
-		http.Error(rw, "Internal server error", http.StatusInternalServerError)
-		return
-	}
-
-	if order == nil || order.UserID != userID {
-		h.logger.Error("Заказ отсутствует или не принадлежит пользователю")
-		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
-		return
-	}
-
 	user, err := h.store.GetUserByIDForUpdate(ctx, tx, userID)
 
 	if err != nil {
@@ -70,7 +57,7 @@ func (h *BalanceHandler) WithdrawHandler(
 		return
 	}
 
-	err = h.store.CreateWithdrawal(ctx, tx, userID, req.Sum, order.ID)
+	err = h.store.CreateWithdrawal(ctx, tx, userID, req.Sum, req.Order)
 
 	switch {
 	case err == pgx.ErrNoRows:

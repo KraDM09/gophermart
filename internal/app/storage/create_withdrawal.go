@@ -10,16 +10,16 @@ func (pg PG) CreateWithdrawal(
 	tx pgx.Tx,
 	userID int,
 	sum float32,
-	orderID int,
+	order string,
 ) error {
 	row, err := tx.Exec(ctx,
-		`INSERT INTO db_gophermart.withdrawals (user_id, sum, order_id)
+		`INSERT INTO db_gophermart.withdrawals (user_id, sum, order)
 				VALUES ($1, $2, $3)
 				ON CONFLICT DO NOTHING
 				RETURNING id`,
 		userID,
 		sum,
-		orderID,
+		order,
 	)
 
 	if err != nil {

@@ -9,7 +9,7 @@ import (
 )
 
 type Withdrawal struct {
-	Number       string `json:"number"`
+	Order        string `json:"order"`
 	Sum          int    `json:"sum"`
 	Processed_at string `json:"processed_at"`
 }
@@ -36,7 +36,7 @@ func (h *UserHandler) WithdrawalsHandler(
 
 	for _, withdrawal := range *withdrawals {
 		response = append(response, Withdrawal{
-			Number:       withdrawal.Number,
+			Order:        withdrawal.Order,
 			Sum:          withdrawal.Sum,
 			Processed_at: withdrawal.Processed_at.Format(time.RFC3339),
 		})
