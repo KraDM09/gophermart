@@ -9,9 +9,9 @@ import (
 )
 
 type Withdrawal struct {
-	Order        string `json:"order"`
-	Sum          int    `json:"sum"`
-	Processed_at string `json:"processed_at"`
+	Order        string  `json:"order"`
+	Sum          float32 `json:"sum"`
+	Processed_at string  `json:"processed_at"`
 }
 
 func (h *UserHandler) WithdrawalsHandler(
