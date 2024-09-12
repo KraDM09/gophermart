@@ -67,7 +67,7 @@ func (h *BalanceHandler) WithdrawHandler(
 		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
 		return
 	case err != nil:
-		h.logger.Error("Не удалось создать вывод средств")
+		h.logger.Error("Не удалось создать вывод средств " + err.Error())
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		return
 	}
