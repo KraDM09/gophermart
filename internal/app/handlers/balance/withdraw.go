@@ -9,7 +9,7 @@ import (
 )
 
 type WithdrawRequest struct {
-	Order string  `json:"order" validate:"required,min=10,max=16"`
+	Order string  `json:"order" validate:"required,min=9,max=16"`
 	Sum   float32 `json:"sum" validate:"required,min=1"`
 }
 
