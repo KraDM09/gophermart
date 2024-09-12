@@ -61,7 +61,7 @@ func (a *app) webhook(
 
 	userHandler := handlers.NewHandler(a.store, a.validator)
 	ordersHandler := orders.NewHandler(a.store, a.validator, a.jobsChan)
-	balanceHandler := balance.NewHandler(a.store, a.validator)
+	balanceHandler := balance.NewHandler(a.store, a.validator, a.logger)
 
 	a.router.Post("/api/user/login", func(rw http.ResponseWriter, r *http.Request) {
 		userHandler.LoginHandler(ctx, rw, r)

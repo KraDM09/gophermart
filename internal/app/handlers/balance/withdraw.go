@@ -53,6 +53,7 @@ func (h *BalanceHandler) WithdrawHandler(
 	}
 
 	if order == nil || order.UserID != userID {
+		h.logger.Error("Заказ отсутствует или не принадлежит пользователю")
 		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
 		return
 	}
@@ -73,6 +74,7 @@ func (h *BalanceHandler) WithdrawHandler(
 
 	switch {
 	case err == pgx.ErrNoRows:
+		h.logger.Error("Вывод средств не создан")
 		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
 		return
 	case err != nil:
