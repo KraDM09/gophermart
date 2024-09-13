@@ -3,8 +3,6 @@ package workerpool
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"github.com/KraDM09/gophermart/internal/app/config"
 	"github.com/KraDM09/gophermart/internal/app/logger"
 	"github.com/KraDM09/gophermart/internal/app/models"
 	"github.com/KraDM09/gophermart/internal/app/storage"
@@ -41,16 +39,21 @@ func (wp WorkerPool) Worker(
 
 		err := wp.updateInfo(ctx, &job)
 
-		switch err != nil {
-		case err.Code == http.StatusTooManyRequests:
-			time.Sleep(60 * time.Second)
-		case err.Code == http.StatusNotAcceptable:
-		case err.Code == http.StatusInternalServerError:
-			time.Sleep(1 * time.Second)
-		default:
-			wp.logger.Error(err.Message)
-			jobs <- job
+		if err == nil {
+			wp.logger.Info("заказ обработан", "order", job.Number)
+			continue
 		}
+
+		if err.Code == http.StatusTooManyRequests {
+			time.Sleep(60 * time.Second)
+		} else {
+			time.Sleep(1 * time.Second)
+		}
+
+		wp.logger.Error(err.Message)
+		jobs <- job
+
+		continue
 	}
 }
 
@@ -147,7 +150,8 @@ func GetOrderHandler(
 	ctx context.Context,
 	number string,
 ) (*GetOrderResponse, error) {
-	url := fmt.Sprintf("%s/api/orders/%s", config.FlagAccrualSystemAddr, number)
+	//url := fmt.Sprintf("%s/api/orders/%s", config.FlagAccrualSystemAddr, number)
+	url := "https://7b525102-c05c-4a37-9073-76cc1430afd1.mock.pstmn.io"
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 
 	if err != nil {
