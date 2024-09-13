@@ -9,7 +9,7 @@ import (
 
 type UserBalance struct {
 	Current   float32 `json:"current"`
-	Withdrawn int     `json:"withdrawn"`
+	Withdrawn float32 `json:"withdrawn"`
 }
 
 func (h *BalanceHandler) GetHandler(

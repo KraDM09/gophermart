@@ -70,7 +70,7 @@ func (pg PG) Bootstrap(
 			id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 			"order"      TEXT                                     NOT NULL UNIQUE,
 			user_id      INT REFERENCES db_gophermart.users (id)  NOT NULL,
-			sum          INTEGER                                  NOT NULL,
+			sum          NUMERIC(10, 2)                           NOT NULL,
 			processed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 		);
     `)
