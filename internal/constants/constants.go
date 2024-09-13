@@ -12,7 +12,7 @@ const (
 
 const (
 	LoyaltyOrderStatusRegistered string = "REGISTERED"
-	LoyaltyOrderStatusInvalid           = "INVALID"
-	LoyaltyOrderStatusProcessing        = "PROCESSING"
-	LoyaltyOrderStatusProcessed         = "PROCESSED"
+	LoyaltyOrderStatusInvalid    string = "INVALID"
+	LoyaltyOrderStatusProcessing string = "PROCESSING"
+	LoyaltyOrderStatusProcessed  string = "PROCESSED"
 )
