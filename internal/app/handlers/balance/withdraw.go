@@ -41,7 +41,6 @@ func (h *BalanceHandler) WithdrawHandler(
 	defer tx.Rollback(ctx)
 
 	if err != nil {
-		h.logger.Error("Не удалось начать транзакцию")
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		return
 	}
@@ -49,7 +48,6 @@ func (h *BalanceHandler) WithdrawHandler(
 	user, err := h.store.GetUserByIDForUpdate(ctx, tx, userID)
 
 	if err != nil {
-		h.logger.Error("Не удалось получить пользователя")
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		return
 	}
@@ -63,11 +61,9 @@ func (h *BalanceHandler) WithdrawHandler(
 
 	switch {
 	case err == pgx.ErrNoRows:
-		h.logger.Error("Вывод средств не создан")
 		http.Error(rw, "Неверный номер заказа", http.StatusUnprocessableEntity)
 		return
 	case err != nil:
-		h.logger.Error("Не удалось создать вывод средств " + err.Error())
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		return
 	}
@@ -75,12 +71,16 @@ func (h *BalanceHandler) WithdrawHandler(
 	err = h.store.UpdateBalance(ctx, tx, -float32(req.Sum), userID)
 
 	if err != nil {
-		h.logger.Error("Не удалось обновить баланс")
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 
 	err = tx.Commit(ctx)
+
+	if err != nil {
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 
 	rw.Header().Set("Content-Type", "application/json")
 	rw.WriteHeader(http.StatusOK)

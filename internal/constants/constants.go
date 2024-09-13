@@ -11,8 +11,8 @@ const (
 )
 
 const (
-	LOYALTY_ORDER_STATUS_REGISTERED string = "REGISTERED"
-	LOYALTY_ORDER_STATUS_INVALID           = "INVALID"
-	LOYALTY_ORDER_STATUS_PROCESSING        = "PROCESSING"
-	LOYALTY_ORDER_STATUS_PROCESSED         = "PROCESSED"
+	LoyaltyOrderStatusRegistered string = "REGISTERED"
+	LoyaltyOrderStatusInvalid           = "INVALID"
+	LoyaltyOrderStatusProcessing        = "PROCESSING"
+	LoyaltyOrderStatusProcessed         = "PROCESSED"
 )

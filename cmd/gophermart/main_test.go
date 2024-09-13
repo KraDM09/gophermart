@@ -297,14 +297,14 @@ func Test_withdrawals(t *testing.T) {
 			On("GetWithdrawals", mock.Anything, mock.Anything).
 			Return(&[]models.Withdrawal{
 				{
-					Order:        "12345678903",
-					Sum:          100.0,
-					Processed_at: time.Now(),
+					Order:       "12345678903",
+					Sum:         100.0,
+					ProcessedAt: time.Now(),
 				},
 				{
-					Order:        "62345678903",
-					Sum:          50.0,
-					Processed_at: time.Now(),
+					Order:       "62345678903",
+					Sum:         50.0,
+					ProcessedAt: time.Now(),
 				},
 			}, nil)
 

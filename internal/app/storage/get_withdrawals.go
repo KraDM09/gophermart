@@ -29,7 +29,7 @@ func (pg PG) GetWithdrawals(
 		err = rows.Scan(
 			&withdrawal.Order,
 			&withdrawal.Sum,
-			&withdrawal.Processed_at,
+			&withdrawal.ProcessedAt,
 		)
 		if err != nil {
 			return nil, err
