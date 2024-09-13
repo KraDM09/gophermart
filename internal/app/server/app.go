@@ -57,7 +57,6 @@ func (a *app) webhook(
 	ctx context.Context,
 ) router.Router {
 	a.router.Use(a.logger.RequestLogger)
-	a.router.Use(a.compressor.RequestCompressor)
 
 	userHandler := handlers.NewHandler(a.store, a.validator, a.logger)
 	ordersHandler := orders.NewHandler(a.store, a.validator, a.jobsChan)
