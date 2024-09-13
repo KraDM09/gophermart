@@ -42,5 +42,11 @@ func (h *UserHandler) WithdrawalsHandler(
 		})
 	}
 
-	json.NewEncoder(rw).Encode(response)
+	err = json.NewEncoder(rw).Encode(response)
+
+	if err != nil {
+		h.logger.Error("Не удалось сериализовать ответ " + err.Error())
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
+		return
+	}
 }

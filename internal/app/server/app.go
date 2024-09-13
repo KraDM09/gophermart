@@ -59,7 +59,7 @@ func (a *app) webhook(
 	a.router.Use(a.logger.RequestLogger)
 	a.router.Use(a.compressor.RequestCompressor)
 
-	userHandler := handlers.NewHandler(a.store, a.validator)
+	userHandler := handlers.NewHandler(a.store, a.validator, a.logger)
 	ordersHandler := orders.NewHandler(a.store, a.validator, a.jobsChan)
 	balanceHandler := balance.NewHandler(a.store, a.validator, a.logger)
 
